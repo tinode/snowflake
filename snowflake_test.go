@@ -44,7 +44,7 @@ func TestDuplicate(t *testing.T) {
 		}
 
 		if id < pre {
-			t.Errorf("id %v is samller than previous one %v", id, pre)
+			t.Errorf("id %v is smaller than previous one %v", id, pre)
 		}
 		pre = id
 
@@ -58,7 +58,7 @@ func TestDuplicate(t *testing.T) {
 	length := len(data)
 	t.Logf("map length %v", length)
 	if length != total {
-		t.Errorf("legth does not match want %v actual %d", total, length)
+		t.Errorf("length does not match expected value; expected %v, actual %d", total, length)
 	}
 
 }
