@@ -8,8 +8,8 @@ import (
 
 const (
 	// custom epoch - time offset, milliseconds
-	// Oct 24, 2014 22:06:02.373, incidentally equal to a few first digits of sqrt(2)
-	epoch int = 1414213562373
+	// Oct 25, 2014 05:06:02.373 UTC, incidentally equal to the first few digits of sqrt(2)
+	epoch int64 = 1414213562373
 
 	// number of bit allocated for server id (max 1023)
 	numWorkerBits = 10
@@ -77,5 +77,5 @@ func (sf *SnowFlake) waitNextMilli(ts uint64) uint64 {
 
 func timestamp() uint64 {
 	// convert from nanoseconds to milliseconds, adjust for custom epoch
-	return uint64(time.Now().UnixNano()/1000000 - epoch)
+	return uint64(time.Now().UnixNano()/int64(1000000) - epoch)
 }
