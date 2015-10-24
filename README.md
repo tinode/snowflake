@@ -20,7 +20,7 @@ Differences from Twitter's Snowflake:
 - zero on error instead of -1
 - different epoc: 2014 instead of 2010
 
-## Lisence
+## License
 
 Apache License 2.0
 
