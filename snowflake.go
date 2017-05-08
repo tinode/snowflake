@@ -11,9 +11,9 @@ const (
 	// Oct 25, 2014 05:06:02.373 UTC, incidentally equal to the first few digits of sqrt(2)
 	epoch int64 = 1414213562373
 
-	// number of bit allocated for server id (max 1023)
+	// number of bits allocated for the server id (max 1023)
 	numWorkerBits = 10
-	// # of bits allocated for millisecond
+	// # of bits allocated for the counter per millisecond
 	numSequenceBits = 12
 
 	// workerId mask
@@ -29,14 +29,14 @@ type SnowFlake struct {
 	lock          sync.Mutex
 }
 
-// pack bits into a snowflake
+// Pack bits into a snowflake value.
 func (sf *SnowFlake) pack() uint64 {
 	return (sf.lastTimestamp << (numWorkerBits + numSequenceBits)) |
 		(uint64(sf.workerId) << numSequenceBits) |
 		(uint64(sf.sequence))
 }
 
-// Initialise generator
+// Initialize the generator.
 func NewSnowFlake(workerId uint32) (*SnowFlake, error) {
 	if workerId < 0 || workerId > maxWorkerId {
 		return nil, errors.New("invalid worker Id")
@@ -44,7 +44,7 @@ func NewSnowFlake(workerId uint32) (*SnowFlake, error) {
 	return &SnowFlake{workerId: workerId}, nil
 }
 
-// Generate next unique ID
+// Generate the next unique ID.
 func (sf *SnowFlake) Next() (uint64, error) {
 	sf.lock.Lock()
 	defer sf.lock.Unlock()
@@ -66,7 +66,7 @@ func (sf *SnowFlake) Next() (uint64, error) {
 	return sf.pack(), nil
 }
 
-// Sequance exhausted. Wait till next millisocond
+// Sequence exhausted. Wait till the next millisecond.
 func (sf *SnowFlake) waitNextMilli(ts uint64) uint64 {
 	for ts == sf.lastTimestamp {
 		time.Sleep(100 * time.Microsecond)
@@ -76,6 +76,6 @@ func (sf *SnowFlake) waitNextMilli(ts uint64) uint64 {
 }
 
 func timestamp() uint64 {
-	// convert from nanoseconds to milliseconds, adjust for custom epoch
+	// Convert from nanoseconds to milliseconds, adjust for the custom epoch.
 	return uint64(time.Now().UnixNano()/int64(1000000) - epoch)
 }
