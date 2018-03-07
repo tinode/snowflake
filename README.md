@@ -1,6 +1,6 @@
 # Snowflake
 
-Yet another Golang implementation of Twitter's Snowflake.
+Yet another Golang implementation of Twitter's Snowflake. This implementation is used by https://github.com/tinode/chat and as such it's up to date and supported.
 
 ## Performance
 
