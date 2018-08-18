@@ -22,6 +22,7 @@ const (
 	maxSequence = -1 ^ (-1 << numSequenceBits)
 )
 
+// SnowFlake is a structure which holds snowflake-specific data.
 type SnowFlake struct {
 	lastTimestamp uint64
 	sequence      uint32
@@ -36,7 +37,7 @@ func (sf *SnowFlake) pack() uint64 {
 		(uint64(sf.sequence))
 }
 
-// Initialize the generator.
+// NewSnowFlake initializes the generator.
 func NewSnowFlake(workerId uint32) (*SnowFlake, error) {
 	if workerId < 0 || workerId > maxWorkerId {
 		return nil, errors.New("invalid worker Id")
@@ -44,7 +45,7 @@ func NewSnowFlake(workerId uint32) (*SnowFlake, error) {
 	return &SnowFlake{workerId: workerId}, nil
 }
 
-// Generate the next unique ID.
+// Next generates the next unique ID.
 func (sf *SnowFlake) Next() (uint64, error) {
 	sf.lock.Lock()
 	defer sf.lock.Unlock()
