@@ -39,7 +39,7 @@ func (sf *SnowFlake) pack() uint64 {
 
 // NewSnowFlake initializes the generator.
 func NewSnowFlake(workerId uint32) (*SnowFlake, error) {
-	if workerId < 0 || workerId > maxWorkerId {
+	if workerId > maxWorkerId {
 		return nil, errors.New("invalid worker Id")
 	}
 	return &SnowFlake{workerId: workerId}, nil
